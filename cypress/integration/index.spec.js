@@ -1,6 +1,6 @@
 const domain = 'google';
 
-describe('domain', () => {
+describe(domain, () => {
   it('initial', () => {
     cy.viewport(1000, 4000)
     cy.visit(`https://${domain}.com/`)
