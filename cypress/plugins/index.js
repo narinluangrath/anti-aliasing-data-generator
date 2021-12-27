@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -38,5 +40,10 @@ module.exports = (on, config) => {
       console.log(message)
       return null
     },
+
+    saveJson({ obj, fileName }) {
+      fs.writeFileSync(fileName, JSON.stringify(obj, null, 2));
+      return null;
+    }
   })
 }

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cypress run --browser chrome"
+    "dev": "cypress run --browser chrome",
+    "scrape-css": "cypress run --browser chrome --spec 'cypress/integration/scrape-mdn.spec.js'"
   },
   "keywords": [],
   "author": "",
