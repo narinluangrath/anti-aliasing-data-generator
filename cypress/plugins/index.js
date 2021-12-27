@@ -1,4 +1,6 @@
 const fs = require('fs');
+const path = require('path');
+const { writeImageDiff, deconstructFile } = require('../../utils');
 
 /// <reference types="cypress" />
 // ***********************************************************
@@ -44,6 +46,20 @@ module.exports = (on, config) => {
     saveJson({ obj, fileName }) {
       fs.writeFileSync(fileName, JSON.stringify(obj, null, 2));
       return null;
+    }
+  })
+
+  // https://docs.cypress.io/api/plugins/after-screenshot-api#Syntax
+  on('after:screenshot', (details) => {
+    const basename = path.basename(details.path, '.png');
+    const { type } = deconstructFile(basename);
+
+    if (type !== 'baseline') {
+      writeImageDiff(
+        details.path.replace(type, 'baseline'), 
+        details.path, 
+        details.path.replace(type, `${type}-difference`)
+      );
     }
   })
 }
