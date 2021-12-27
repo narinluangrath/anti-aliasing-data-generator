@@ -1,0 +1,6 @@
+{
+  "defaultCommandTimeout": 10000,
+  "trashAssetsBeforeRuns": true,
+  "video": false,
+  "chromeWebSecurity": false
+}

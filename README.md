@@ -1,0 +1,1 @@
+Take screenshots of websites to create a database of "actual" visual regressions and ones cause by anti-aliasing. For future use in machine learning models.
