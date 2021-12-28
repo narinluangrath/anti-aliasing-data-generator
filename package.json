@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "create-data": "cypress run --browser chrome --spec 'cypress/integration/index.spec.js'",
+    "generate-data": "cypress run --browser chrome --spec 'cypress/integration/index.spec.js'",
     "scrape-css": "cypress run --browser chrome --spec 'cypress/integration/scrape-mdn.spec.js'"
   },
   "keywords": [],

@@ -21,6 +21,7 @@ domains.forEach(domain => {
     // Fetch static HTML
     cy.request(`https://www.${domain}.com`)
       .then((response) => {
+        if (response.status !== 200) throw Error(`Expected 200 status code, received ${response.status}`)
         cy.writeFile(`cypress/fixtures/${domain}.html`, response.body)
       })
 
