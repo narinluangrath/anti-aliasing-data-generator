@@ -1,28 +1,43 @@
-const domain = 'twitter';
-
 import { constructFile } from '../../utils';
 
-describe(domain, () => {
-  it('baseline', () => {
+const domains = [
+  'google',
+  'facebook',
+  'twitter',
+  'instagram',
+  'amazon',
+  'netflix',
+  'live',
+  'tiktok',
+  'discord',
+  'twitch',
+  'bing',
+  'microsoft',
+  'roblox'
+]
+
+domains.forEach(domain => {
+  it(domain, () => {
+    // Fetch static HTML
+    cy.request(`https://www.${domain}.com`)
+      .then((response) => {
+        cy.writeFile(`cypress/fixtures/${domain}.html`, response.body)
+      })
+
+    // Create baseline
     cy.viewport(1000, 4000)
-    cy.visit(`https://${domain}.com/`)
+    cy.visit(`cypress/fixtures/${domain}.html`)
     cy.waitForNetworkIdle(`**.${domain}.com**`, 1000)
     cy.screenshot(constructFile({ domain, type: 'baseline' }), { capture: 'viewport' })
-  })
 
-  it('artifact', () => {
+    // Create artifact
     cy.viewport(1000, 4000)
-    cy.clearLocalStorage()
-    cy.clearCookies()
     cy.reload(true)
     cy.waitForNetworkIdle(`**.${domain}.com**`, 1000)
     cy.screenshot(constructFile({ domain, type: 'artifact' }), { capture: 'viewport' })
-  })
 
-  it('regression', () => {
+    // Create regression
     cy.viewport(1000, 4000)
-    cy.clearLocalStorage()
-    cy.clearCookies()
     cy.reload(true)
     cy.waitForNetworkIdle(`**.${domain}.com**`, 1000)
     cy.createRegression()
