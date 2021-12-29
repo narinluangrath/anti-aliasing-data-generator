@@ -24,8 +24,8 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   on('before:browser:launch', (browser, launchOptions) => {
-    const width = process.env.WIDTH || '3000'
-    const height = process.env.HEIGHT || '6000'
+    const width = process.env.WIDTH || '2000'
+    const height = process.env.HEIGHT || '2000'
 
     if (browser.name !== 'chrome') {
       throw Error('Just use chrome for now...')
@@ -44,22 +44,28 @@ module.exports = (on, config) => {
     },
 
     saveJson({ obj, fileName }) {
+      console.log('saveJson')
       fs.writeFileSync(fileName, JSON.stringify(obj, null, 2));
+      console.log('saveJson-1')
       return null;
     }
   })
 
   // https://docs.cypress.io/api/plugins/after-screenshot-api#Syntax
   on('after:screenshot', (details) => {
+    console.log('after:screenshot')
     const basename = path.basename(details.path, '.png');
     const { type } = deconstructFile(basename);
-
-    if (type !== 'baseline') {
+    console.log('after:screenshot-1')
+    if (type !== 'baseline' && !details.path.includes('failed')) {
+      console.log('after:screenshot-2')
       writeImageDiff(
         details.path.replace(type, 'baseline'), 
         details.path, 
         details.path.replace(type, `${type}-difference`)
       );
+      console.log('after:screenshot-3')
     }
+    console.log('after:screenshot-4')
   })
 }

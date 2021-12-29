@@ -19,3 +19,10 @@ import 'cypress-network-idle'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  console.log('uncaught:exception')
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})

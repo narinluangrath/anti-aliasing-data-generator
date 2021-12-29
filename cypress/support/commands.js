@@ -53,20 +53,29 @@ const getRandomValueOfObject = (obj) => {
 const getRandomCss = () => getRandomElementOfArray(getRandomValueOfObject(css));
 
 Cypress.Commands.add('createRegression', () => {
+  cy.task('log', 'createRegression')
   cy.document().then(document => {
+    cy.task('log', 'createRegression-1')
     // Get a random element on the screen (that is visible)
     const randomElements = [];
     const elements = Array.from(document.body.getElementsByTagName("*"))
+    cy.task('log', 'createRegression-2')
     const numElementsToChange = getRandomNumber(MAX_ELEMENTS_TO_CHANGE);
+    cy.task('log', 'createRegression-3')
     while (randomElements.length < numElementsToChange) {
+      cy.task('log', 'createRegression-loop')
       const randomElement = getRandomElementOfArray(elements);
       if (Cypress.dom.isVisible(randomElement)) {
         randomElements.push(randomElement);
       }
     }
+    cy.task('log', 'createRegression-end-while')
 
     randomElements.forEach(e => {
+      cy.task('log', 'createRegression-forEach')
       cy.wrap(e).invoke('attr', 'style', getRandomCss());
     })
+    cy.task('log', 'createRegression-end-then')
   })
+  cy.task('log', 'createRegression-5')
 })
