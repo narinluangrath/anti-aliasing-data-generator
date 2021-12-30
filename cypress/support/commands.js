@@ -1,3 +1,5 @@
+import { recurse } from 'cypress-recurse'
+
 import css from '../../css.json';
 
 // ***********************************************
@@ -78,4 +80,44 @@ Cypress.Commands.add('createRegression', () => {
     cy.task('log', 'createRegression-end-then')
   })
   cy.task('log', 'createRegression-5')
+})
+
+Cypress.Commands.add('waitForStableDOM', (wait = 1000) => {
+  let mutation;
+
+  cy.document()
+    .then(document => {
+      // Options for the observer (which mutations to observe)
+      const config = {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeOldValue: true,
+        characterData: true,
+        characterDataOldValue: true,
+      };
+      
+      // Create an observer instance linked to the callback function
+      const observer = new MutationObserver((m) => mutation = m);
+      
+      // Start observing the target node for configured mutations
+      observer.observe(document, config);
+    })
+    .then(() => {
+      cy.wait(wait)
+      recurse(
+        () => {
+          const temp = mutation;
+          mutation = null;
+          return cy.wrap(temp);
+        },
+        b => !b,
+        {
+          log: true,
+          limit: 10,
+          delay: wait,
+          timeout: 10 * wait,
+        }
+      );
+    })
 })

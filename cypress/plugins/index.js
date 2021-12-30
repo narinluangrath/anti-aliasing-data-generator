@@ -57,6 +57,7 @@ module.exports = (on, config) => {
     const basename = path.basename(details.path, '.png');
     const { type } = deconstructFile(basename);
     console.log('after:screenshot-1')
+    console.log({ basename, type })
     if (type !== 'baseline' && !details.path.includes('failed')) {
       console.log('after:screenshot-2')
       writeImageDiff(

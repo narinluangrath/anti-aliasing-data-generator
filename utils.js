@@ -29,14 +29,16 @@ function writeImageDiff(baseline, comparison, difference) {
   console.log('writeImageDiff-4')
 }
 
+const delimiter = '---';
+
 function constructFile({ url, type }) {
   console.log('constructFile')
-  return `${url}-${type}`; 
+  return `${url}${delimiter}${type}`; 
 }
 
 function deconstructFile(file) {
   console.log('deconstructFile')
-  const [url, type] = file.split('-');
+  const [url, type] = file.split(delimiter);
   return { url, type };
 }
 
@@ -289,7 +291,6 @@ const urls = [
   'cnet.com',
   'ifeng.com',
   'alibaba.com',
-  'hugedomains.com',
   'bbc.co.uk',
   'ameblo.jp',
   'time.com',

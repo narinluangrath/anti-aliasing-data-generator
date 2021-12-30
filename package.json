@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate-data": "cypress run --browser chrome --spec 'cypress/integration/index.spec.js'",
+    "generate-data": "rm cypress/integration/generate-data-* && rm cypress/fixtures/* && node create-test-files.js && cypress run --browser chrome --spec 'cypress/integration/generate-data-*.spec.js'",
+    "generate-data-dev": "rm cypress/integration/generate-data-* && rm cypress/fixtures/* && node create-test-files.js && cypress open --browser chrome",
     "scrape-css": "cypress run --browser chrome --spec 'cypress/integration/scrape-mdn.spec.js'"
   },
   "keywords": [],
@@ -13,6 +14,7 @@
   "dependencies": {
     "cypress": "^9.2.0",
     "cypress-network-idle": "^1.3.3",
+    "cypress-recurse": "^1.13.1",
     "pixelmatch": "^5.2.1",
     "pngjs": "^4.0.1"
   }
